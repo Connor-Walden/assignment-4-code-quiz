@@ -160,10 +160,16 @@ function nextCard(num) {
       break;
     case 6:
       current = "results";
+
       if(DNF)
         correctAnswers = "DNF";
+
       STL = true;
+
+      cardAns1.removeAttribute("style");
+
       vlbButton.textContent = "Take the quiz!";
+
       setupResults();
       return;
   }
