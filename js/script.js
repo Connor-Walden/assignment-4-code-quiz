@@ -15,6 +15,9 @@ var modalSub = document.querySelector("#usrInitialsSubmit");
 // Timer
 var timerEl = document.querySelector("#timerEl");
 
+// View Leaderboards button
+var vlbButton = document.querySelector("#vlbButton");
+
 // 0 - Intro, 1 - Q1, 2 - Q2, 3 - Q3, 4 - Q4, 5 - Q5, 6 - RESULTS
 var state = 0;
 
@@ -38,6 +41,9 @@ var waitTime = 1000;
 
 // Use this to track if the user finished the quiz within the time allowed
 var DNF = false;
+
+// This is used to track whether user skipped directly to leaderboards, or if they completed quiz
+var STL = false;
 
 // Questions object to store all important data for the quiz.
 var questions = {
@@ -463,6 +469,8 @@ function displayResults() {
   var list1 = document.createElement("ul");
   list1.setAttribute("class", "list-group");
 
+  var children = [];
+
   for(var i = 0; i < questions.results.log.length; i++) {
     var listItem = document.createElement("li");
     listItem.setAttribute("class", "list-group-item");
@@ -473,6 +481,26 @@ function displayResults() {
   buttons.appendChild(list1);
 }
 
+function viewLeaderboards() {
+  if(!STL) {
+    clearInterval(interval);
+
+    STL = true;
+
+    cardAns1.parentElement.style.display = "none";
+    cardAns2.parentElement.style.display = "none";
+    cardAns3.parentElement.style.display = "none";
+    cardAns4.parentElement.style.display = "none";
+
+    vlbButton.textContent = "Try the quiz!";
+
+    displayResults();
+  }
+  else {
+    location.reload();
+  }
+}
+
 // Event listeners create the callback on the buttons so the quiz knows what the user is inputting
 cardAns1.addEventListener("click", answer1);
 cardAns2.addEventListener("click", answer2);
@@ -481,3 +509,6 @@ cardAns4.addEventListener("click", answer4);
 
 // Modal
 modalSub.addEventListener("click", submitResult);
+
+// View Leaderboard button
+vlbButton.addEventListener("click", viewLeaderboards);
