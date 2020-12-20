@@ -29,7 +29,7 @@ var questions = {
     "question":
       "Are you ready to start the code quiz? For every answer just click one of the multiple choice answers to reply!",
     "answer1": "No, I'm all good :(",
-    "answer2": "Yes, I'm going to destroy this!",
+    "answer2": "Yes, bring it on!",
     "answer3": "disabled",
     "answer4": "disabled",
   },
@@ -155,33 +155,28 @@ function nextCard(num) {
 
 // Functions that will determine whether user's response is correct using a js object for lookup
 function answer1() {
-  isSwitching = true;
-
-  switch (state) {
-    case 0:
-      if (!isSwitching) {
+  if(!isSwitching) {
+    switch (state) {
+      case 0:
         cardAns1.setAttribute("style", "background-color: red;");
         setTimeout(() => {
-          nextCard(1);
+          alert("That's too bad :(");
+          nextCard(0);
         }, 2000);
-      }
-      break;
-    case 1:
-      if (!isSwitching) {
+        break;
+      case 1:
         cardAns1.setAttribute("style", "background-color: red;");
         setTimeout(() => {
           nextCard(2);
         }, 2000);
-      }
-      break;
-    case 2:
-      if (!isSwitching) {
+        break;
+      case 2:
         cardAns1.setAttribute("style", "background-color: red;");
         setTimeout(() => {
           nextCard(3);
         }, 2000);
-      }
-      break;
+        break;
+    }
   }
 }
 
@@ -190,22 +185,22 @@ function answer2() {
     switch (state) {
       // Not increasing correct answers for the intro
       case 0:
-          cardAns2.setAttribute("style", "background-color: green;");
-          setTimeout(() => {
-            nextCard(1);
-          }, 2000);
+        cardAns2.setAttribute("style", "background-color: green;");
+        setTimeout(() => {
+          nextCard(1);
+        }, 2000);
         break;
       case 1:
-          cardAns2.setAttribute("style", "background-color: red;");
-          setTimeout(() => {
-            nextCard(2);
-          }, 2000);
+        cardAns2.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(2);
+        }, 2000);
         break;
       case 2:
-          cardAns2.setAttribute("style", "background-color: red;");
-          setTimeout(() => {
-            nextCard(3);
-          }, 2000);
+        cardAns2.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(3);
+        }, 2000);
         break;
     }
 
@@ -217,23 +212,23 @@ function answer3() {
   if(!isSwitching) {
     switch (state) {
       case 0:
-          cardAns3.setAttribute("style", "background-color: red;");
-          setTimeout(() => {
-            nextCard(1);
-          }, 2000);
+        cardAns3.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(1);
+        }, 2000);
         break;
       case 1:
-          cardAns3.setAttribute("style", "background-color: green;");
-          correctAnswers++;
-          setTimeout(() => {
-            nextCard(2);
-          }, 2000);
+        cardAns3.setAttribute("style", "background-color: green;");
+        correctAnswers++;
+        setTimeout(() => {
+          nextCard(2);
+        }, 2000);
         break;
       case 2:
-          cardAns3.setAttribute("style", "background-color: red;");
-          setTimeout(() => {
-            nextCard(3);
-          }, 2000);
+        cardAns3.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(3);
+        }, 2000);
         break;
     }
 
@@ -245,29 +240,23 @@ function answer4() {
   if(!isSwitching) {
     switch (state) {
       case 0:
-        if (!isSwitching) {
-          cardAns4.setAttribute("style", "background-color: red;");
-          setTimeout(() => {
-            nextCard(1);
-          }, 2000);
-        }
+        cardAns4.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(1);
+        }, 2000);
         break;
       case 1:
-        if (!isSwitching) {
-          cardAns4.setAttribute("style", "background-color: red;");
-          setTimeout(() => {
-            nextCard(2);
-          }, 2000);
-        }
+        cardAns4.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(2);
+        }, 2000);
         break;
       case 2:
-        if (!isSwitching) {
-          cardAns4.setAttribute("style", "background-color: green;");
-          correctAnswers++;
-          setTimeout(() => {
-            nextCard(3);
-          }, 2000);
-        }
+        cardAns4.setAttribute("style", "background-color: green;");
+        correctAnswers++;
+        setTimeout(() => {
+          nextCard(3);
+        }, 2000);
         break;
     }
 
