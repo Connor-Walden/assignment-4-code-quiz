@@ -55,7 +55,7 @@
             <br />
 
             <!-- RESPONSE -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" id="buttons">
               <div class="col-6 justify-content-center">
                 <button
                   type="button"
@@ -91,6 +91,25 @@
                 >
                   disabled
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal asking user for their initial to save their score -->
+        <div class="modal" tabindex="-1" id="modal1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">What are your initials?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input type="text" name="usrInitials" id="usrInitialsField">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="usrInitialsSubmit">Submit score</button>
               </div>
             </div>
           </div>

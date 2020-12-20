@@ -6,6 +6,11 @@ var cardAns1 = document.querySelector("#card-ans-1");
 var cardAns2 = document.querySelector("#card-ans-2");
 var cardAns3 = document.querySelector("#card-ans-3");
 var cardAns4 = document.querySelector("#card-ans-4");
+var buttons = document.querySelector("#buttons");
+
+// Modal
+var modalText = document.querySelector("#usrInitialsField");
+var modalSub = document.querySelector("#usrInitialsSubmit");
 
 // 0 - Intro, 1 - Q1, 2 - Q2, 3 - Q3, 4 - Q4, 5 - Q5, 6 - RESULTS
 var state = 0;
@@ -52,8 +57,59 @@ var questions = {
     "answer2": "msg(\"GeeksForGeeks\");",
     "answer3": "msgbox(\"GeeksForGeeks\");",
     "answer4": "alert(\"GeeksForGeeks\");"
+  },
+  "three": {
+    "title": "Code Quiz",
+    "subtitle": "Question 3",
+    "question": "The external javascript file must contain the <script> tag. True or False?",
+    "answer1": "True",
+    "answer2": "False",
+    "answer3": "disabled",
+    "answer4": "disabled"
+  },
+  "four": {
+    "title": "Code Quiz",
+    "subtitle": "Question 4",
+    "question": "Predict the output of the following line of javascript code:\n8 + \"8\" = ?",
+    "answer1": "88",
+    "answer2": "Compilation error",
+    "answer3": "16",
+    "answer4": "Runtime error"
+  },
+  "five": {
+    "title": "Code Quiz",
+    "subtitle": "Question 5",
+    "question": "Which of the following is not a reserved word in javascript?",
+    "answer1": "interface",
+    "answer2": "throws",
+    "answer3": "program",
+    "answer4": "short"
+  },
+  "results": {
+    "title": "Code Quiz",
+    "subtitle": "Results",
+    "question": "Your score: " + correctAnswers + " / " + numQuestions,
+    "log": []
   }
 };
+
+if(localStorage.getItem("log"))
+  questions.results.log = JSON.parse(localStorage.getItem("log"));
+
+function setupResults() {
+  cardAns1.textContent = "Submit";
+
+  cardAns2.parentElement.style.display = "none";
+  cardAns3.parentElement.style.display = "none";
+  cardAns4.parentElement.style.display = "none";
+
+  cardAns1.setAttribute("data-bs-toggle", "modal"); 
+  cardAns1.setAttribute("data-bs-target", "#modal1");
+
+  cardTitle.textContent = "Code Quiz";
+  cardSubtitle.textContent = "Results";
+  cardQuestion.textContent = "Score: " + correctAnswers;
+}
 
 // Function that switches questions based on the state number provided, in almost all
 // cases, this number will go up by 1 when this function in invoked.
@@ -83,7 +139,8 @@ function nextCard(num) {
       break;
     case 6:
       current = "results";
-      break;
+      setupResults();
+      return;
   }
 
   var curQuestion = questions[current];
@@ -176,6 +233,25 @@ function answer1() {
           nextCard(3);
         }, 2000);
         break;
+      case 3:
+        cardAns1.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(4);
+        }, 2000);
+        break;
+      case 4:
+        cardAns1.setAttribute("style", "background-color: green;");
+        correctAnswers++;
+        setTimeout(() => {
+          nextCard(5);
+        }, 2000);
+        break;
+      case 5:
+        cardAns1.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(6);
+        }, 2000);
+        break;
     }
   }
 }
@@ -200,6 +276,25 @@ function answer2() {
         cardAns2.setAttribute("style", "background-color: red;");
         setTimeout(() => {
           nextCard(3);
+        }, 2000);
+        break;
+      case 3:
+        cardAns2.setAttribute("style", "background-color: green;");
+        correctAnswers++;
+        setTimeout(() => {
+          nextCard(4);
+        }, 2000);
+        break;
+      case 4:
+        cardAns2.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(5);
+        }, 2000);
+        break;
+      case 5:
+        cardAns2.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(6);
         }, 2000);
         break;
     }
@@ -230,6 +325,25 @@ function answer3() {
           nextCard(3);
         }, 2000);
         break;
+      case 3:
+        cardAns3.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(4);
+        }, 2000);
+        break;
+      case 4:
+        cardAns3.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(5);
+        }, 2000);
+        break;
+      case 5:
+        cardAns3.setAttribute("style", "background-color: green;");
+        correctAnswers++;
+        setTimeout(() => {
+          nextCard(6);
+        }, 2000);
+        break;
     }
 
     isSwitching = true;
@@ -258,10 +372,56 @@ function answer4() {
           nextCard(3);
         }, 2000);
         break;
+      case 3:
+        cardAns4.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(4);
+        }, 2000);
+        break;
+      case 4:
+        cardAns4.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(5);
+        }, 2000);
+        break;
+      case 5:
+        cardAns4.setAttribute("style", "background-color: red;");
+        setTimeout(() => {
+          nextCard(6);
+        }, 2000);
+        break;
     }
 
     isSwitching = true;
   }
+}
+
+function submitResult() {
+  questions.results.log.push({
+    "name": modalText.value,
+    "score": correctAnswers
+  });
+
+  localStorage.setItem("log", JSON.stringify(questions.results.log));
+
+  displayResults();
+}
+
+function displayResults() {
+  cardAns1.style.display = "none";
+  cardQuestion.textContent = "Leaderboards";
+
+  var list1 = document.createElement("ul");
+  list1.setAttribute("class", "list-group");
+
+  for(var i = 0; i < questions.results.log.length; i++) {
+    var listItem = document.createElement("li");
+    listItem.setAttribute("class", "list-group-item");
+    listItem.textContent = questions.results.log[i].name + ": " + questions.results.log[i].score;
+    list1.appendChild(listItem);
+  }
+
+  buttons.appendChild(list1);
 }
 
 // Event listeners create the callback on the buttons so the quiz knows what the user is inputting
@@ -269,3 +429,6 @@ cardAns1.addEventListener("click", answer1);
 cardAns2.addEventListener("click", answer2);
 cardAns3.addEventListener("click", answer3);
 cardAns4.addEventListener("click", answer4);
+
+// Modal
+modalSub.addEventListener("click", submitResult);
