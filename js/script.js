@@ -30,7 +30,12 @@ var questions = {
   },
   "one": {
     "title": "Code Quiz",
-    "subtitle": "",
+    "subtitle": "Question 1",
+    "question": "What is the HTML tag under which once can write the javascript code?",
+    "answer1": "<javascript>",
+    "answer2": "<scripted>",
+    "answer3": "<script>",
+    "answer4": "<js>"
   }
 }
 
@@ -49,30 +54,76 @@ function nextCard(num) {
       cardQuestion.textContent = questions.intro.question;
 
       // Check if any of the options for answers are diabled for this question, then disable them
-      if(questions.intro.answer1 == "disabled") 
-        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
-      else 
+      if(questions.intro.answer1 !== "disabled") 
         cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
-
-      if(questions.intro.answer2 == "disabled") 
-        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
       else 
-        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
-
-      if(questions.intro.answer3 == "disabled") 
         cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
-      else 
-        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
 
-      if(questions.intro.answer4 == "disabled") 
+      if(questions.intro.answer2 !== "disabled") 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
         cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
-      else 
-        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
 
+      if(questions.intro.answer3 !== "disabled") 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
+
+      if(questions.intro.answer4 !== "disabled") 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
+
+      // Set text content of each answer so the user know what to click 
       cardAns1.textContent = questions.intro.answer1;
       cardAns2.textContent = questions.intro.answer2;
       cardAns3.textContent = questions.intro.answer3;
       cardAns4.textContent = questions.intro.answer4;
+
+      // Reset any styling used for the previous question
+      cardAns1.removeAttribute("style");
+      cardAns2.removeAttribute("style");
+      cardAns3.removeAttribute("style");
+      cardAns4.removeAttribute("style");
+
+      isSwitching = false;
+      break;
+    case 1: 
+      cardTitle.textContent = questions.one.title;
+      cardSubtitle.textContent = questions.one.subtitle;
+      cardQuestion.textContent = questions.one.question;
+
+      // Check if any of the options for answers are diabled for this question, then disable them
+      if(questions.one.answer1 !== "disabled") 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
+        cardAns1.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
+
+      if(questions.one.answer2 !== "disabled") 
+        cardAns2.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
+        cardAns2.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
+
+      if(questions.one.answer3 !== "disabled") 
+        cardAns3.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
+        cardAns3.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
+
+      if(questions.one.answer4 !== "disabled") 
+        cardAns4.setAttribute("class", "btn btn-secondary button-fullwidth card-link");
+      else 
+        cardAns4.setAttribute("class", "btn btn-secondary button-fullwidth card-link disabled");
+
+      cardAns1.textContent = questions.one.answer1;
+      cardAns2.textContent = questions.one.answer2;
+      cardAns3.textContent = questions.one.answer3;
+      cardAns4.textContent = questions.one.answer4;
+
+      // Reset any styling used for the previous question
+      cardAns1.removeAttribute("style");
+      cardAns2.removeAttribute("style");
+      cardAns3.removeAttribute("style");
+      cardAns4.removeAttribute("style");
 
       isSwitching = false;
       break;
@@ -84,9 +135,16 @@ function answer1() {
   switch(state) {
     case 0:
       if(!isSwitching) {
-        cardAns1.style.backgroundColor = "red";
+        cardAns1.setAttribute("style", "background-color: red;");
         isSwitching = true;
         setTimeout(() => { nextCard(1) }, 2000);
+      }
+      break;
+    case 1:
+      if(!isSwitching) {
+        cardAns1.setAttribute("style", "background-color: red;");
+        isSwitching = true;
+        setTimeout(() => { nextCard(2) }, 2000);
       }
       break;
   }
@@ -96,10 +154,17 @@ function answer2() {
   switch(state) {
     case 0:
       if(!isSwitching) {
-        cardAns2.style.backgroundColor = "green";
+        cardAns2.setAttribute("style", "background-color: green;");
         correctAnswers++;
         isSwitching = true;
         setTimeout(() => { nextCard(1); }, 2000);
+      }
+      break;
+    case 1:
+      if(!isSwitching) {
+        cardAns2.setAttribute("style", "background-color: red;");
+        isSwitching = true;
+        setTimeout(() => { nextCard(2); }, 2000);
       }
       break;
   }
@@ -109,9 +174,17 @@ function answer3() {
   switch(state) {
     case 0:
       if(!isSwitching) {
-        cardAns3.style.backgroundColor = "red";
+        cardAns3.setAttribute("style", "background-color: red;");
         isSwitching = true;
         setTimeout(() => { nextCard(1) }, 2000);
+      }
+      break;
+    case 1:
+      if(!isSwitching) {
+        cardAns3.setAttribute("style", "background-color: green;");
+        correctAnswers++;
+        isSwitching = true;
+        setTimeout(() => { nextCard(2) }, 2000);
       }
       break;
   }
@@ -121,9 +194,16 @@ function answer4() {
   switch(state) {
     case 0:
       if(!isSwitching) {
-        cardAns4.style.backgroundColor = "red";
+        cardAns4.setAttribute("style", "background-color: red;");
         isSwitching = true;
         setTimeout(() => { nextCard(1) }, 2000);
+      }
+      break;
+    case 1:
+      if(!isSwitching) {
+        cardAns4.setAttribute("style", "background-color: red;");
+        isSwitching = true;
+        setTimeout(() => { nextCard(2) }, 2000);
       }
       break;
   }
