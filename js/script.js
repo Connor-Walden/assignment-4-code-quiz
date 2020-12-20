@@ -162,6 +162,8 @@ function nextCard(num) {
       current = "results";
       if(DNF)
         correctAnswers = "DNF";
+      STL = true;
+      vlbButton.textContent = "Take the quiz!";
       setupResults();
       return;
   }
@@ -292,6 +294,8 @@ function answer1() {
         }, waitTime);
         break;
     }
+
+    isSwitching = true;
   }
 }
 
