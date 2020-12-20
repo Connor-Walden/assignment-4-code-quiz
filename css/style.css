@@ -1,0 +1,8 @@
+.button-fullwidth {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+#question-card {
+  z-index: 0;
+}
