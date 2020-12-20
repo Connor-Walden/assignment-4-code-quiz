@@ -1,8 +1,7 @@
+/* This class makes the buttons in my app take 100% of the width that is
+available to them */
 .button-fullwidth {
+
   width: 100%;
   margin-bottom: 5px;
-}
-
-#question-card {
-  z-index: 0;
 }

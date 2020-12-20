@@ -1,3 +1,5 @@
+
+// References to all important elements in the document.
 var card = document.querySelector("#question-card");
 var cardTitle = document.querySelector("#card-title");
 var cardSubtitle = document.querySelector("#card-subtitle");
@@ -7,15 +9,9 @@ var cardAns2 = document.querySelector("#card-ans-2");
 var cardAns3 = document.querySelector("#card-ans-3");
 var cardAns4 = document.querySelector("#card-ans-4");
 var buttons = document.querySelector("#buttons");
-
-// Modal
 var modalText = document.querySelector("#usrInitialsField");
 var modalSub = document.querySelector("#usrInitialsSubmit");
-
-// Timer
 var timerEl = document.querySelector("#timerEl");
-
-// View Leaderboards button
 var vlbButton = document.querySelector("#vlbButton");
 
 // 0 - Intro, 1 - Q1, 2 - Q2, 3 - Q3, 4 - Q4, 5 - Q5, 6 - RESULTS
@@ -112,10 +108,13 @@ var questions = {
   }
 };
 
+// Check if log exists in localStorage and if so, set our data to equal the localStorage data
 if(localStorage.getItem("log"))
   questions.results.log = JSON.parse(localStorage.getItem("log"));
 
+// Sets up all the elements to display the user's results at the end of the quiz
 function setupResults() {
+  // Make sure to clear interval so the timer doesn't continue to tick
   clearInterval(interval);
 
   cardAns1.textContent = "Submit";
@@ -135,10 +134,13 @@ function setupResults() {
 // Function that switches questions based on the state number provided, in almost all
 // cases, this number will go up by 1 when this function in invoked.
 function nextCard(num) {
+  // Maks sure that the function isnt trying to jump into something that doesn't exist
   if (num < 0 || num > 6) return;
 
   state = num;
 
+  // switch through states to assign the current variable with the correct selector for the 
+  // javascript object
   switch (state) {
     case 0:
       current = "intro";
@@ -161,21 +163,29 @@ function nextCard(num) {
     case 6:
       current = "results";
 
+      // If the user ran out of time this is true, so setup score for results
       if(DNF)
         correctAnswers = "DNF";
 
+      // This means everytime the user reaches the results, this is true and the button
+      // will correctly display 'take the quiz' instead of 'view leaderboards'
       STL = true;
-
-      cardAns1.removeAttribute("style");
-
       vlbButton.textContent = "Take the quiz!";
 
+      // Remove any styles that may have persisted from the questions
+      cardAns1.removeAttribute("style");
+
+      // Because we know the user is headed towards the results page at this point, we 
+      // must call setupResults to make sure all of the elements are displaying the right
+      // thing
       setupResults();
       return;
   }
 
+  // Set variable curQuestion in order to minimise repeated code
   var curQuestion = questions[current];
 
+  // Update text fields to say the right thing
   cardTitle.textContent = curQuestion.title;
   cardSubtitle.textContent = curQuestion.subtitle;
   cardQuestion.textContent = curQuestion.question;
@@ -237,10 +247,11 @@ function nextCard(num) {
   cardAns3.removeAttribute("style");
   cardAns4.removeAttribute("style");
 
+  // At this point, the switching is complete, so turn isSwitching to false so everything is unlocked
   isSwitching = false;
-  console.log("Correct Answers: " + correctAnswers);
 }
 
+// This function ticks the timer every second, takes one from the timer and updates the element text
 function tick() {
   timer --;
   timerEl.textContent = "Time left: " + timer;
@@ -253,6 +264,12 @@ function tick() {
 }
 
 // Functions that will determine whether user's response is correct using a js object for lookup
+
+// If the user is currently switching (clicked an option), don't run any logic as this could lead
+// to exploits where the user can rapidly click the button to get more score than they should
+
+// At this point, we know the user clicked an option, so switch through the state, adjust variables
+// and invoke nextCard to bring the next question up once the user has answered
 function answer1() {
   if(!isSwitching) {
     switch (state) {
@@ -461,6 +478,8 @@ function answer4() {
   }
 }
 
+// Triggered once the user click the submit button in the modal on the results screen, create a
+// new entry in the array of scores (log) and update localStorage
 function submitResult() {
   questions.results.log.push({
     "name": modalText.value,
@@ -469,17 +488,18 @@ function submitResult() {
 
   localStorage.setItem("log", JSON.stringify(questions.results.log));
 
+  // This moves the user over to the leaderboards view
   displayResults();
 }
 
+// Creates the leaderboard for the user to see all previous attempts, then updates all elements to
+// correctly display the leaderboard
 function displayResults() {
   cardAns1.style.display = "none";
   cardQuestion.textContent = "Leaderboards";
 
   var list1 = document.createElement("ul");
   list1.setAttribute("class", "list-group");
-
-  var children = [];
 
   for(var i = 0; i < questions.results.log.length; i++) {
     var listItem = document.createElement("li");
@@ -491,22 +511,31 @@ function displayResults() {
   buttons.appendChild(list1);
 }
 
+// This is called when the button is clicked at the bottom of the page
 function viewLeaderboards() {
+  // Check if user skipped quiz to view leaderboards, if this is true, we can just reload
+  // as we know that the user is already on the leaderboards and wants to do the quiz
   if(!STL) {
+    // make sure that the interval doesn't keep running when we skip to the leaderboards
     clearInterval(interval);
 
+    // change to true so the button uses the correct behaviour next time
     STL = true;
 
+    // Hide the buttons as the quiz if finished so they don't need to be shown
     cardAns1.parentElement.style.display = "none";
     cardAns2.parentElement.style.display = "none";
     cardAns3.parentElement.style.display = "none";
     cardAns4.parentElement.style.display = "none";
 
+    // update the button so it no longer says 'view leaderboards'
     vlbButton.textContent = "Try the quiz!";
 
+    // show he leaderboard as all the settings are now ready
     displayResults();
   }
   else {
+    // reload the page
     location.reload();
   }
 }

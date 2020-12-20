@@ -16,6 +16,7 @@
     <!-- Custom CSS -->
     <link href="./css/style.css" rel="stylesheet" />
 
+    <!-- Title for the website -->
     <title>Connor Walden's magnificent code quiz!</title>
   </head>
   <body>
@@ -30,12 +31,15 @@
 
     <!-- Main Content -->
     <div class="container">
+      <!-- Timer element -->
       <div class="row justify-content-center">
         <h2 class="col-md-4 text-center" id="timerEl">Time left: 60</h2>
       </div>
 
+      <!-- br tag to seperate the comonents a bit -->
       <br />
 
+      <!-- This row contains the quiz! -->
       <div class="row justify-content-center">
         
         <!-- Intro Card -->
@@ -60,7 +64,7 @@
 
             <br />
 
-            <!-- RESPONSE -->
+            <!-- RESPONSE, 4 buttons -->
             <div class="row justify-content-center" id="buttons">
               <div class="col-6 justify-content-center">
                 <button
@@ -110,9 +114,13 @@
                 <h5 class="modal-title">What are your initials?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
+
+              <!-- Modal body, just an text input field -->
               <div class="modal-body">
                 <input type="text" name="usrInitials" id="usrInitialsField">
               </div>
+
+              <!-- Modal footer, contains the close and submit buttons -->
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="usrInitialsSubmit">Submit score</button>
@@ -122,8 +130,10 @@
         </div>
       </div>
 
+      <!-- Another br tag to separate elements -->
       <br />
 
+      <!-- View leaderboard button -->
       <div class="row justify-content-center">
         <div class="col-md-6 text-center">
           <button class="btn btn-secondary" id="vlbButton">View Leaderboards</button>
