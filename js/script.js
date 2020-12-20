@@ -36,6 +36,9 @@ var interval;
 // Time in milliseconds to wait after answer
 var waitTime = 1000;
 
+// Use this to track if the user finished the quiz within the time allowed
+var DNF = false;
+
 // Questions object to store all important data for the quiz.
 var questions = {
   "intro": {
@@ -151,6 +154,8 @@ function nextCard(num) {
       break;
     case 6:
       current = "results";
+      if(DNF)
+        correctAnswers = "DNF";
       setupResults();
       return;
   }
@@ -228,8 +233,8 @@ function tick() {
 
   // if user is out of time and has not completed the quiz restart
   if(timer === 0 && state < 6) {
-    alert("Out of time! :( Click 'Ok' to restart!");
-    location.reload();
+    DNF = true;
+    nextCard(6);
   }
 }
 
