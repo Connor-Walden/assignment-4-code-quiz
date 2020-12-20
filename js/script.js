@@ -12,6 +12,9 @@ var buttons = document.querySelector("#buttons");
 var modalText = document.querySelector("#usrInitialsField");
 var modalSub = document.querySelector("#usrInitialsSubmit");
 
+// Timer
+var timerEl = document.querySelector("#timerEl");
+
 // 0 - Intro, 1 - Q1, 2 - Q2, 3 - Q3, 4 - Q4, 5 - Q5, 6 - RESULTS
 var state = 0;
 
@@ -25,6 +28,13 @@ var log = [];
 
 // Current keeps track of what question we are up to
 var current = "intro";
+
+// Timer for quiz, interval for ticking the timer down
+var timer = 60;
+var interval;
+
+// Time in milliseconds to wait after answer
+var waitTime = 1000;
 
 // Questions object to store all important data for the quiz.
 var questions = {
@@ -97,6 +107,8 @@ if(localStorage.getItem("log"))
   questions.results.log = JSON.parse(localStorage.getItem("log"));
 
 function setupResults() {
+  clearInterval(interval);
+
   cardAns1.textContent = "Submit";
 
   cardAns2.parentElement.style.display = "none";
@@ -210,6 +222,17 @@ function nextCard(num) {
   console.log("Correct Answers: " + correctAnswers);
 }
 
+function tick() {
+  timer --;
+  timerEl.textContent = "Time left: " + timer;
+
+  // if user is out of time and has not completed the quiz restart
+  if(timer === 0 && state < 6) {
+    alert("Out of time! :( Click 'Ok' to restart!");
+    location.reload();
+  }
+}
+
 // Functions that will determine whether user's response is correct using a js object for lookup
 function answer1() {
   if(!isSwitching) {
@@ -219,38 +242,43 @@ function answer1() {
         setTimeout(() => {
           alert("That's too bad :(");
           nextCard(0);
-        }, 2000);
+        }, waitTime);
         break;
       case 1:
         cardAns1.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(2);
-        }, 2000);
+        }, waitTime);
         break;
       case 2:
         cardAns1.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(3);
-        }, 2000);
+        }, waitTime);
         break;
       case 3:
         cardAns1.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(4);
-        }, 2000);
+        }, waitTime);
         break;
       case 4:
         cardAns1.setAttribute("style", "background-color: green;");
+        timer += 5;
         correctAnswers++;
         setTimeout(() => {
           nextCard(5);
-        }, 2000);
+        }, waitTime);
         break;
       case 5:
         cardAns1.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(6);
-        }, 2000);
+        }, waitTime);
         break;
     }
   }
@@ -263,39 +291,45 @@ function answer2() {
       case 0:
         cardAns2.setAttribute("style", "background-color: green;");
         setTimeout(() => {
+          interval = setInterval(tick, 1000);
           nextCard(1);
-        }, 2000);
+        }, waitTime);
         break;
       case 1:
         cardAns2.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(2);
-        }, 2000);
+        }, waitTime);
         break;
       case 2:
         cardAns2.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(3);
-        }, 2000);
+        }, waitTime);
         break;
       case 3:
         cardAns2.setAttribute("style", "background-color: green;");
         correctAnswers++;
+        timer += 5;
         setTimeout(() => {
           nextCard(4);
-        }, 2000);
+        }, waitTime);
         break;
       case 4:
         cardAns2.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(5);
-        }, 2000);
+        }, waitTime);
         break;
       case 5:
+        timer -= 10;
         cardAns2.setAttribute("style", "background-color: red;");
         setTimeout(() => {
           nextCard(6);
-        }, 2000);
+        }, waitTime);
         break;
     }
 
@@ -310,39 +344,44 @@ function answer3() {
         cardAns3.setAttribute("style", "background-color: red;");
         setTimeout(() => {
           nextCard(1);
-        }, 2000);
+        }, waitTime);
         break;
       case 1:
         cardAns3.setAttribute("style", "background-color: green;");
+        timer += 5;
         correctAnswers++;
         setTimeout(() => {
           nextCard(2);
-        }, 2000);
+        }, waitTime);
         break;
       case 2:
         cardAns3.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(3);
-        }, 2000);
+        }, waitTime);
         break;
       case 3:
         cardAns3.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(4);
-        }, 2000);
+        }, waitTime);
         break;
       case 4:
         cardAns3.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(5);
-        }, 2000);
+        }, waitTime);
         break;
       case 5:
         cardAns3.setAttribute("style", "background-color: green;");
+        timer += 5;
         correctAnswers++;
         setTimeout(() => {
           nextCard(6);
-        }, 2000);
+        }, waitTime);
         break;
     }
 
@@ -357,38 +396,43 @@ function answer4() {
         cardAns4.setAttribute("style", "background-color: red;");
         setTimeout(() => {
           nextCard(1);
-        }, 2000);
+        }, waitTime);
         break;
       case 1:
         cardAns4.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(2);
-        }, 2000);
+        }, waitTime);
         break;
       case 2:
         cardAns4.setAttribute("style", "background-color: green;");
+        timer += 5;
         correctAnswers++;
         setTimeout(() => {
           nextCard(3);
-        }, 2000);
+        }, waitTime);
         break;
       case 3:
         cardAns4.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(4);
-        }, 2000);
+        }, waitTime);
         break;
       case 4:
         cardAns4.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(5);
-        }, 2000);
+        }, waitTime);
         break;
       case 5:
         cardAns4.setAttribute("style", "background-color: red;");
+        timer -= 10;
         setTimeout(() => {
           nextCard(6);
-        }, 2000);
+        }, waitTime);
         break;
     }
 
