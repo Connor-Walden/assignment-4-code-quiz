@@ -57,7 +57,7 @@ var questions = {
     "title": "Code Quiz",
     "subtitle": "Question 1",
     "question":
-      "What is the HTML tag under which once can write the javascript code?",
+      "What is the HTML tag under which one can write the javascript code?",
     "answer1": "<javascript>",
     "answer2": "<scripted>",
     "answer3": "<script>",
@@ -67,11 +67,11 @@ var questions = {
     "title": "Code Quiz",
     "subtitle": "Question 2",
     "question": 
-      "Which of the following is the correct syntax to display \"GeeksForGeeks\" in an alert box using javascript?",
-    "answer1": "alertbox(\"GeeksForGeeks\");",
-    "answer2": "msg(\"GeeksForGeeks\");",
-    "answer3": "msgbox(\"GeeksForGeeks\");",
-    "answer4": "alert(\"GeeksForGeeks\");"
+      "Which of the following is the correct syntax to display \"Assignment 4\" in an alert box using javascript?",
+    "answer1": "alertbox(\"Assignment 4\");",
+    "answer2": "msg(\"Assignment 4\");",
+    "answer3": "msgbox(\"Assignment 4\");",
+    "answer4": "alert(\"Assignment 4\");"
   },
   "three": {
     "title": "Code Quiz",
