@@ -483,7 +483,8 @@ function answer4() {
 function submitResult() {
   questions.results.log.push({
     "name": modalText.value,
-    "score": correctAnswers
+    "score": correctAnswers,
+    "time": timer
   });
 
   localStorage.setItem("log", JSON.stringify(questions.results.log));
@@ -504,7 +505,16 @@ function displayResults() {
   for(var i = 0; i < questions.results.log.length; i++) {
     var listItem = document.createElement("li");
     listItem.setAttribute("class", "list-group-item");
-    listItem.textContent = questions.results.log[i].name + ": " + questions.results.log[i].score;
+    if(questions.results.log[i].score == "DNF") {
+      listItem.textContent = 
+        questions.results.log[i].name + " did not finish :(";
+    }
+    else {
+      listItem.textContent = 
+        questions.results.log[i].name + ": " + 
+        questions.results.log[i].score + " with " +
+        questions.results.log[i].time + " seconds left!";
+    }
     list1.appendChild(listItem);
   }
 
