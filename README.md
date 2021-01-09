@@ -2,8 +2,7 @@
 Code Quiz
 
 ## Description
-Code quiz using bootstrap and a lot is JavaScript. My main goal with this was to make the user experience super smooth and I think that was accomplished with the simple red / green responses to indicate correct or incorrect
-
+Code quiz using bootstrap and a lot is JavaScript. My main goal with this was to make the user experience super smooth and I think that was accomplished
 ## Screenshots
 ![Screen Shot 2020-12-21 at 12 29 44 am](https://user-images.githubusercontent.com/20080981/102715219-c7cdc600-4323-11eb-94eb-579900d4488e.png)
 ![Screen Shot 2020-12-21 at 12 29 51 am](https://user-images.githubusercontent.com/20080981/102715225-ce5c3d80-4323-11eb-8dc1-f173ee7d67b0.png)
